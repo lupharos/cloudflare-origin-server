@@ -37,24 +37,23 @@ To run the server locally:
 ```bash
 npm install
 npm start
-```
 
-To run the server on AWS:
+***To run the server on AWS
 Use Ubuntu 22.04
 sudo apt update
 sudo apt install nodejs npm -y
 git clone https://github.com/senin-user/cloudflare-origin-server.git
 cd cloudflare-origin-server
 npm install
-Then visit: [http://localhost:3000]
-
+Then visit: [http://localhost:3000](https://localhost:3000)  
+```
 ---
 
 ## 🚀 Deployment (Live)
 
 The application is deployed and publicly accessible via Render.com:
 
-🌐 **Live URL:** [https://cloudflare-origin-server.onrender.com](https://cloudflare-origin-server.onrender.com)  
+🌐 **Live URL:** [https://lupharos.onrender.com](https://lupharos.onrender.com)  
 *(Replace with your actual deployed URL if different)*
 
 ---
