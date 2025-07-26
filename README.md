@@ -39,15 +39,14 @@ npm install
 npm start
 ```
 
-For AWS 
-Ubuntu 22.04
+To run the server on AWS:
+Use Ubuntu 22.04
 sudo apt update
 sudo apt install nodejs npm -y
 git clone https://github.com/senin-user/cloudflare-origin-server.git
 cd cloudflare-origin-server
 npm install
-
-Then visit: [http://localhost:3000](http://localhost:3000)
+Then visit: [http://localhost:3000]
 
 ---
 
