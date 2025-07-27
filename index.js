@@ -3,7 +3,7 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 
-const PORT = 443;
+const PORT = 3000;
 
 const options = {
   key: fs.readFileSync('/opt/lupharos/certs/privkey.pem'),
