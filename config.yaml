@@ -1,0 +1,10 @@
+tunnel: d45dc8ad-b83e-459e-9d21-92118e982b42
+credentials-file: /home/ubuntu/.cloudflared/d45dc8ad-b83e-459e-9d21-92118e982b42.json
+
+ingress:
+  - hostname: tunnel.lupharos.com.tr
+    service: http://localhost:3000
+    originRequest:
+      noTLSVerify: true
+  - service: http_status:404
+  

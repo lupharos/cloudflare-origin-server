@@ -1,74 +1,173 @@
-# KA - Cloudflare Origin Server
+# 🌐 Lupharos Origin Server – Full Installation Guide
 
-This is a simple Node.js-based origin web server used for the Cloudflare technical assignment.
-
-## Features
-
-- Returns **all HTTP request headers** at the root endpoint `/`
-- Built with **Express.js**
-- Ready to be proxied via **Cloudflare CDN**
-- Supports **TLS 1.2+** and **Full-Strict SSL mode**
-- Deployed using **Render.com**
+### By Kemal Artıkarslan
 
 ---
 
-## Header Details of API Endpoint
+## 📌 1. Domain & DNS Setup
 
-### `GET /`
+### 1.1 Purchase Domain
+Buy `lupharos.com.tr` from a registrar like Namecheap, GoDaddy, or Google Domains.
 
-Returns all incoming request headers as JSON.
+### 1.2 Move DNS to Cloudflare
+- Add the domain to [Cloudflare Dashboard](https://dash.cloudflare.com)
+- Replace registrar's nameservers with Cloudflare's
+- Wait for propagation
 
-**Example Response:**
+---
 
-```json
-{
-  "host": "lupharos.com",
-  "user-agent": "curl/7.88.1",
-  "accept": "*/*"
+## 🔐 2. Cloudflare API Token
+
+### Scopes Required
+- `Zone:Read`
+- `DNS:Edit`
+- `Tunnel:Edit`
+
+Create token from [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens)
+
+Store in `.env`:
+
+```
+CF_API_TOKEN=your_token_here
+CF_ZONE_ID=your_zone_id_here
+```
+
+---
+
+## 🌩️ 3. Cloudflare Tunnel
+
+```bash
+sudo apt install cloudflared
+cloudflared login
+cloudflared tunnel create lupharos-tunnel
+cloudflared tunnel route dns lupharos-tunnel tunnel.lupharos.com.tr
+```
+
+### Example config.yaml
+
+```yaml
+tunnel: <your-tunnel-id>
+credentials-file: /home/ubuntu/.cloudflared/<your-tunnel-id>.json
+
+ingress:
+  - hostname: tunnel.lupharos.com.tr
+    service: http://localhost:3000
+    originRequest:
+      noTLSVerify: true
+  - service: http_status:404
+```
+
+```bash
+sudo cloudflared service install
+sudo systemctl start cloudflared
+sudo systemctl enable cloudflared
+```
+
+---
+
+## 🧠 4. Express.js Server Setup
+
+```bash
+npm install express path axios dotenv
+```
+
+### Directory structure:
+
+```
+cloudflare-origin-server/
+├── index.js
+├── .env
+├── public/
+│   └── style.css
+```
+
+---
+
+## 🔒 5. TLS / SSL Certificate
+
+### Option 1: Let's Encrypt (Initial)
+```bash
+sudo apt install certbot python3-certbot-nginx
+sudo certbot --nginx -d origin.lupharos.com.tr
+```
+
+### Option 2: Cloudflare Origin Cert (Final Setup)
+Generate certificate in Cloudflare → SSL/TLS → Origin Certificates
+
+Put files in:
+```
+/opt/lupharos/certs/origin.pem
+/opt/lupharos/certs/origin-key.pem
+```
+
+NGINX config:
+```nginx
+server {
+    listen 443 ssl http2;
+    server_name origin.lupharos.com.tr;
+
+    ssl_certificate     /opt/lupharos/certs/origin.pem;
+    ssl_certificate_key /opt/lupharos/certs/origin-key.pem;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+server {
+    listen 80;
+    server_name origin.lupharos.com.tr;
+    return 301 https://$host$request_uri;
 }
 ```
 
 ---
 
-## 🛠️ Deployment (Local)
+## ✅ 6. API Token Call – List DNS Records
 
-To run the server locally:
+### Scopes Used:
+- `Zone:Read`
+- `DNS:Edit`
 
+### API Call:
 ```bash
-npm install
-npm start
-
-***To run the server on AWS
-Use Ubuntu 22.04
-sudo apt update
-sudo apt install nodejs npm -y
-git clone https://github.com/senin-user/cloudflare-origin-server.git
-cd cloudflare-origin-server
-npm install
-Then visit: [http://localhost:3000](https://localhost:3000)  
+curl -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json"
 ```
+
+### Output:
+```json
+{
+  "result": [
+    {
+      "type": "CNAME",
+      "name": "tunnel.lupharos.com.tr",
+      "content": "UUID.cfargotunnel.com"
+    },
+    {
+      "type": "A",
+      "name": "origin.lupharos.com.tr",
+      "content": "1.2.3.4"
+    }
+  ],
+  "success": true
+}
+```
+
 ---
 
-## 🚀 Deployment (Live)
+## 🚀 Final Test
 
-The application is deployed and publicly accessible via Render.com:
+- Launch app via `node index.js` or `pm2`
+- Navigate to `https://tunnel.lupharos.com.tr`
+- Page shows:
+  - HTTP Headers
+  - Cloudflare Proxy/Tunnel info
+  - DNS Records via Cloudflare API
 
-🌐 **Live URL:** [https://lupharos.onrender.com](https://lupharos.onrender.com)  
-*(Replace with your actual deployed URL if different)*
-
----
-
-## 📌 Used in Cloudflare Technical Assignment For:
-
-✅ Origin Web Server Setup  
-✅ Cloudflare Proxy Integration  
-✅ TLS Configuration (Full-Strict + TLS 1.2+)  
-✅ Argo Tunnel Setup (`tunnel.example.com`)  
-✅ Cloudflare Worker Redirect Logic (User-Agent based redirect)  
-✅ Secure Access Control for protected path (`/secure`) without Workers
-
----
-
-## 📄 License
-
-MIT
+✅ Everything is working as expected.
