@@ -6,8 +6,8 @@ const app = express();
 const PORT = 443;
 
 const options = {
-  key: fs.readFileSync('/etc/letsencrypt/live/origin.lupharos.com.tr/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/origin.lupharos.com.tr/fullchain.pem')
+  key: fs.readFileSync('/opt/lupharos/certs/privkey.pem'),
+  cert: fs.readFileSync('/opt/lupharos/certs/fullchain.pem')
 };
 
 app.get('/', (req, res) => {
