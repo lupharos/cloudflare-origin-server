@@ -32,14 +32,14 @@ app.get('/', (req, res) => {
       </head>
       <body>
         <div class="box">
-          <h1>🌐 Cloudflare Origin Server Info</h1>
+          <h1>KA - CF Origin Server Info</h1>
           <h2>Created by Kemal ARTIKARSLAN</h2>
           <p><strong>Cloudflare Proxy:</strong> ${isCloudflare ? '✅ Yes' : '❌ No'}</p>
           <p><strong>TLS Version:</strong> ${tlsVersion}</p>
           <p><strong>Certificate Valid To:</strong> ${certValidTo}</p>
           <p><strong>Cloudflare SSL Mode:</strong> Full (Strict)</p>
 
-          <h3>🔎 HTTP Request Headers</h3>
+          <h3>HTTP Request Headers</h3>
           <table>
             <tr><th>Header</th><th>Value</th></tr>`;
   
