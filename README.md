@@ -39,8 +39,8 @@ CF_ZONE_ID=your_zone_id_here
 ```bash
 sudo apt install cloudflared
 cloudflared login
-cloudflared tunnel create lupharos-tunnel
-cloudflared tunnel route dns lupharos-tunnel tunnel.lupharos.com.tr
+cloudflared tunnel create yourtunelname
+cloudflared tunnel route dns yourtunnelname yourtunneldomainname
 ```
 
 ### Example config.yaml
@@ -50,7 +50,7 @@ tunnel: <your-tunnel-id>
 credentials-file: /home/ubuntu/.cloudflared/<your-tunnel-id>.json
 
 ingress:
-  - hostname: tunnel.lupharos.com.tr
+  - hostname: yourtunneldomainname
     service: http://localhost:3000
     originRequest:
       noTLSVerify: true
@@ -88,7 +88,7 @@ cloudflare-origin-server/
 ### Option 1: Let's Encrypt (Initial)
 ```bash
 sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d origin.lupharos.com.tr
+sudo certbot --nginx -d yourdomainname
 ```
 
 ### Option 2: Cloudflare Origin Cert (Final Setup)
@@ -104,7 +104,7 @@ NGINX config:
 ```nginx
 server {
     listen 443 ssl http2;
-    server_name origin.lupharos.com.tr;
+    server_name yourdomainname;
 
     ssl_certificate     /opt/lupharos/certs/origin.pem;
     ssl_certificate_key /opt/lupharos/certs/origin-key.pem;
@@ -120,7 +120,7 @@ server {
 
 server {
     listen 80;
-    server_name origin.lupharos.com.tr;
+    server_name yourdomainname;
     return 301 https://$host$request_uri;
 }
 ```
@@ -140,18 +140,18 @@ curl -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
   -H "Content-Type: application/json"
 ```
 
-### Output:
+### Output / Samples:
 ```json
 {
   "result": [
     {
       "type": "CNAME",
-      "name": "tunnel.lupharos.com.tr",
+      "name": "yoursampledomaindns1",
       "content": "UUID.cfargotunnel.com"
     },
     {
       "type": "A",
-      "name": "origin.lupharos.com.tr",
+      "name": "yoursampledomaindns2",
       "content": "1.2.3.4"
     }
   ],
@@ -164,7 +164,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
 ## 🚀 Final Test
 
 - Launch app via `node index.js` or `pm2`
-- Navigate to `https://tunnel.lupharos.com.tr`
+- Navigate to `https://yourdomain`
 - Page shows:
   - HTTP Headers
   - Cloudflare Proxy/Tunnel info
