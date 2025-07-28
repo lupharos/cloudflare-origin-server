@@ -47,6 +47,13 @@ In the **Security Group** configuration:
 | Custom TCP  | TCP      | 3000       | 0.0.0.0/0      |
 
 > ✅ Tip: You can restrict port 3000 to your IP for security, e.g., `x.x.x.x/32`
+> > 🧩 **Note:**  
+> If your Cloudflare Tunnel (Argo Tunnel) is configured successfully, you **won’t need to open ports 80, 443, or 3000** in your Security Group.  
+> 
+> The tunnel will establish an **outbound-only encrypted connection** to Cloudflare, allowing secure public access to your internal services **without exposing any ports to the internet**.
+>
+> This greatly improves your security posture by avoiding direct inbound traffic to your server.
+
 
 ---
 
