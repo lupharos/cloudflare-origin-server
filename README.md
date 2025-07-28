@@ -47,17 +47,42 @@ In the **Security Group** configuration:
 | Custom TCP  | TCP      | 3000       | 0.0.0.0/0      |
 
 > ✅ Tip: You can restrict port 3000 to your IP for security, e.g., `x.x.x.x/32`
-> > 🧩 **Note:**  
+> 🧩 **Note:**  
 > If your Cloudflare Tunnel (Argo Tunnel) is configured successfully, you **won’t need to open ports 80, 443, or 3000** in your Security Group.  
 > 
 > The tunnel will establish an **outbound-only encrypted connection** to Cloudflare, allowing secure public access to your internal services **without exposing any ports to the internet**.
 >
 > This greatly improves your security posture by avoiding direct inbound traffic to your server.
+---
+-Step 3: Essential Package Installation (English)
+sudo apt update && sudo apt upgrade -y
 
+Install Nginx (web server)
+sudo apt install nginx -y
 
+Install Certbot (optional, for HTTPS)
+sudo apt install certbot python3-certbot-nginx -y
+
+Install curl (required for Node.js setup)
+sudo apt install curl -y
+
+Install Node.js (LTS version) and npm
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt install -y nodejs
+
+Install PM2 (to keep Node.js app running in background)
+sudo npm install -g pm2
+
+📌 What These Commands Do:
+Package	Description
+nginx	HTTP server, optional reverse proxy for Node.js
+certbot + python3-certbot-nginx	Free SSL/TLS certificates via Let's Encrypt (optional)
+curl	Used for downloading external setup scripts
+nodejs + npm	JavaScript runtime and package manager
+pm2	Keeps your Node.js app running continuously (process ma
 ---
 
--✅ Step 3: Allocate and Attach an Elastic IP
+-✅ Step 4: Allocate and Attach an Elastic IP
 
 1. Go to **EC2 > Elastic IPs**.
 2. Click **Allocate Elastic IP**.
@@ -66,7 +91,7 @@ In the **Security Group** configuration:
 
 ---
 
--✅ Step 4: Connect to Your Server
+-✅ Step 5: Connect to Your Server
 
 From your terminal:
 
