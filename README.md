@@ -62,7 +62,8 @@ sudo cloudflared service install
 sudo systemctl start cloudflared
 sudo systemctl enable cloudflared
 ```
-
+Please check the config file to use right yaml or yml file.
+sudo nano /etc/systemd/system/cloudflared.service
 ---
 
 ## 🧠 4. Express.js Server Setup
