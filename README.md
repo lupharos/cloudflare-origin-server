@@ -7,7 +7,7 @@
 ## 📌 1. Domain & DNS Setup
 
 ### 1.1 Purchase Domain
-Buy `lupharos.com.tr` from a registrar like Namecheap, GoDaddy, or Google Domains.
+Buy `a domain` from a registrar like Namecheap, GoDaddy, or Google Domains.
 
 ### 1.2 Move DNS to Cloudflare
 - Add the domain to [Cloudflare Dashboard](https://dash.cloudflare.com)
