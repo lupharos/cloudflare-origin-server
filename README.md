@@ -14,7 +14,7 @@ Buy `lupharos.com.tr` from a registrar like Namecheap, GoDaddy, or Google Domain
 - Replace registrar's nameservers with Cloudflare's
 - Wait for propagation
 
-### 1.3 Prepare your Ubuntu Server
+### 1.3 Prepare your Endpoint Server
 
 This guide explains how to set up a basic Ubuntu server on AWS using EC2, attach an Elastic IP (EIP), and configure necessary ports (80, 443, 3000) for web and Node.js applications.
 
@@ -56,30 +56,24 @@ In the **Security Group** configuration:
 ---
 -✅ Step 3: Essential Package Installation (English)
 
-sudo apt update && sudo apt upgrade -y
+1.sudo apt update && sudo apt upgrade -y
 
-Install Nginx (web server)
+2.Install Nginx (web server)
 sudo apt install nginx -y
 
-Install Certbot (optional, for HTTPS)
+3.Install Certbot (optional, for HTTPS)
 sudo apt install certbot python3-certbot-nginx -y
 
-Install curl (required for Node.js setup)
+4.Install curl (required for Node.js setup)
 sudo apt install curl -y
 
-Install Node.js (LTS version) and npm
+5.Install Node.js (LTS version) and npm
 curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt install -y nodejs
 
-Install PM2 (to keep Node.js app running in background)
+6.Install PM2 (to keep Node.js app running in background)
 sudo npm install -g pm2
 
-Package	Description
-nginx	HTTP server, optional reverse proxy for Node.js
-certbot + python3-certbot-nginx	Free SSL/TLS certificates via Let's Encrypt (optional)
-curl	Used for downloading external setup scripts
-nodejs + npm	JavaScript runtime and package manager
-pm2	Keeps your Node.js app running continuously (process ma
 ---
 
 -✅ Step 4: Allocate and Attach an Elastic IP
