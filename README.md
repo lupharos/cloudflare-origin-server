@@ -15,11 +15,10 @@ Buy `lupharos.com.tr` from a registrar like Namecheap, GoDaddy, or Google Domain
 - Wait for propagation
 
 ### 1.3 Prepare your Ubuntu Server
-# Used AWS EC2 Ubuntu Server Setup with Elastic IP & Port Configuration
 
 This guide explains how to set up a basic Ubuntu server on AWS using EC2, attach an Elastic IP (EIP), and configure necessary ports (80, 443, 3000) for web and Node.js applications.
 
-## ✅ Step 1: Launch an EC2 Ubuntu Server
+-Step 1: Launch an EC2 Ubuntu Server
 
 1. Sign in to [AWS Console](https://console.aws.amazon.com/).
 2. Go to **EC2** service.
@@ -36,7 +35,7 @@ This guide explains how to set up a basic Ubuntu server on AWS using EC2, attach
 
 ---
 
-## ✅ Step 2: Open Required Ports in Security Group
+-Step 2: Open Required Ports in Security Group
 
 In the **Security Group** configuration:
 
@@ -51,7 +50,7 @@ In the **Security Group** configuration:
 
 ---
 
-## ✅ Step 3: Allocate and Attach an Elastic IP
+-✅ Step 3: Allocate and Attach an Elastic IP
 
 1. Go to **EC2 > Elastic IPs**.
 2. Click **Allocate Elastic IP**.
@@ -60,12 +59,13 @@ In the **Security Group** configuration:
 
 ---
 
-## ✅ Step 4: Connect to Your Server
+-✅ Step 4: Connect to Your Server
 
 From your terminal:
 
 ```bash
 ssh -i "your-key.pem" ubuntu@<your-elastic-ip>
+```
 
 ## 🔐 2. Cloudflare API Token
 
