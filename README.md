@@ -18,7 +18,7 @@ Buy `lupharos.com.tr` from a registrar like Namecheap, GoDaddy, or Google Domain
 
 This guide explains how to set up a basic Ubuntu server on AWS using EC2, attach an Elastic IP (EIP), and configure necessary ports (80, 443, 3000) for web and Node.js applications.
 
--Step 1: Launch an EC2 Ubuntu Server
+-✅ Step 1: Launch an EC2 Ubuntu Server
 
 1. Sign in to [AWS Console](https://console.aws.amazon.com/).
 2. Go to **EC2** service.
@@ -35,7 +35,7 @@ This guide explains how to set up a basic Ubuntu server on AWS using EC2, attach
 
 ---
 
--Step 2: Open Required Ports in Security Group
+-✅ Step 2: Open Required Ports in Security Group
 
 In the **Security Group** configuration:
 
@@ -54,7 +54,8 @@ In the **Security Group** configuration:
 >
 > This greatly improves your security posture by avoiding direct inbound traffic to your server.
 ---
--Step 3: Essential Package Installation (English)
+-✅ Step 3: Essential Package Installation (English)
+
 sudo apt update && sudo apt upgrade -y
 
 Install Nginx (web server)
@@ -73,7 +74,6 @@ sudo apt install -y nodejs
 Install PM2 (to keep Node.js app running in background)
 sudo npm install -g pm2
 
-📌 What These Commands Do:
 Package	Description
 nginx	HTTP server, optional reverse proxy for Node.js
 certbot + python3-certbot-nginx	Free SSL/TLS certificates via Let's Encrypt (optional)
